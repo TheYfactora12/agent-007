@@ -24,6 +24,8 @@ agent-007/
 │   ├── engineering/
 │   │   ├── software-architect.md
 │   │   ├── security-engineer.md
+│   │   ├── threat-modeler.md
+│   │   ├── docker-security-hardener.md
 │   │   ├── devops-automator.md
 │   │   ├── code-reviewer.md
 │   │   └── technical-writer.md
@@ -36,6 +38,8 @@ agent-007/
 │   │   └── accessibility-auditor.md
 │   └── custom/
 │       ├── infosec-risk-officer.md
+│       ├── vendor-risk-assessor.md
+│       ├── incident-response-commander.md
 │       ├── offline-ai-architect.md
 │       └── model-risk-governance.md
 ├── playbooks/
@@ -54,12 +58,12 @@ agent-007/
 
 | Phase | Active agents | Gate output |
 |---|---|---|
-| Discovery | Software Architect, InfoSec Risk Officer, Offline AI Architect | Scope + risk statement |
-| Architecture | Software Architect, Security Engineer, DevOps Automator | ADR log + threat model |
+| Discovery | Software Architect, InfoSec Risk Officer, Vendor Risk Assessor, Offline AI Architect | Scope + risk statement |
+| Architecture | Software Architect, Security Engineer, Threat Modeler, Docker Security Hardener, DevOps Automator | ADR log + threat model |
 | Engineering build | Code Reviewer, Technical Writer, Security Engineer | Reviewed PRs + runbook draft |
 | Design | UI Designer, UX Researcher, Accessibility Auditor | Component spec + usability findings |
-| QA + Release | Evidence Collector, Reality Checker, Accessibility Auditor | Go/no-go memo + defect log |
-| Post-release | Model Risk Governance, InfoSec Risk Officer | Risk register update + monitoring plan |
+| QA + Release | Evidence Collector, Reality Checker, Accessibility Auditor, Incident Response Commander, InfoSec Risk Officer | Go/no-go memo + defect log |
+| Post-release | Model Risk Governance, InfoSec Risk Officer, Incident Response Commander | Risk register update + monitoring plan |
 
 ---
 
@@ -81,8 +85,8 @@ Run agents in sequence using a playbook from `/playbooks/`. Each playbook define
 | Project | Key phases active now | Priority agents |
 |---|---|---|
 | **Blackhat** (cybersecurity mobile game) | Engineering build, QA | Code Reviewer, Evidence Collector, Reality Checker, DevOps Automator |
-| **Merlin / RiskStack Labs** (local AI platform) | Architecture, Design | Software Architect, Offline AI Architect, UI Designer, InfoSec Risk Officer |
-| **Pokémon Champions Sim** | Engineering, QA | Code Reviewer, Technical Writer, Evidence Collector |
+| **Merlin / RiskStack Labs** (local AI platform) | Architecture, Design | Software Architect, Offline AI Architect, Threat Modeler, UI Designer, InfoSec Risk Officer |
+| **Pokémon Champions Sim** | Engineering, QA | Code Reviewer, Technical Writer, Evidence Collector, Reality Checker |
 
 ---
 

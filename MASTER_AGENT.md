@@ -1,5 +1,13 @@
 # 007 Mastermind — Master Agent
 
+## Entry Rule
+
+Do not start here.
+
+Read `START_HERE.md` first.
+
+Use this file only after the mission has a target user, a risk route, and a defined outcome.
+
 ## Purpose
 
 007 Mastermind is the command layer for using AI agents to build software safely, quickly, and with evidence.
@@ -169,6 +177,8 @@ Expected output: branch, PR, issue list, plan, or review.
 ```
 
 Then run the mission through a workflow in `/workflows/`.
+
+If the mission is not yet clearly defined, go back to `START_HERE.md` and the mission intake template before using this file.
 
 ## First mental model
 

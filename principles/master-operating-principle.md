@@ -32,6 +32,18 @@ The repeated pattern across the principles is:
 6. Teach what is useful.
 7. Help real people.
 
+## Operating Loop Priority
+
+Finish the operating loop before expanding the operating system.
+
+The loop is not complete until work moves through:
+
+```text
+idea → mission packet → target user → risk route → execution artifact → evidence → lesson → closeout
+```
+
+If the loop is unfinished, new doctrine, categories, or meta-structure are lower priority than closing the loop cleanly.
+
 ## What Agent-007 Must Do
 
 For every meaningful mission, Agent-007 must answer:

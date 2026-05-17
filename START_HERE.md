@@ -2,7 +2,9 @@
 
 ## Bottom Line
 
-Agent-007 is Kevin's personal AI operating system for cutting through noise, creating better judgment, and turning ideas into usable, teachable, risk-routed work.
+Start with `START_HERE.md`.
+
+Agent-007 is Kevin's personal AI operating system for cutting through noise, routing missions, preserving learning, and turning ideas into useful work.
 
 Use this file first.
 
@@ -19,6 +21,18 @@ idea → mission packet → risk route → execution artifact → evidence → l
 It is not meant to create more documents for their own sake.
 
 It is meant to make the next right action clearer.
+
+## What Agent-007 Now Has
+
+Agent-007 now has:
+
+- mission packet template
+- governance routing standard
+- risk threshold standard
+- budget/spend rules
+- rollback/backtrack rules
+- evidence expectations
+- sample mission packet
 
 ## When To Use Agent-007
 
@@ -49,6 +63,24 @@ Use Agent-007 when Kevin has:
 
 If Agent-007 does not make the next right action clearer, safer, simpler, or more teachable, it is creating noise.
 
+## Operating Priority
+
+Finish the operating loop before expanding the operating system.
+
+Less building the system.
+
+More using the system.
+
+In practice, that means:
+
+- prove the mission flow end to end
+- produce a usable artifact
+- capture evidence
+- capture the lesson
+- close the mission cleanly
+
+Only then should new doctrine, agent roles, or operating layers be added.
+
 ## Risk Routing
 
 - Low risk: proceed and document.
@@ -60,13 +92,32 @@ Never merge to main, deploy, spend over cap, handle secrets, or take irreversibl
 
 ## First Files To Open
 
-1. `principles/master-operating-principle.md`
-2. `governance/007-governance-threshold-standard.md`
-3. `missions/mission-intake-template.md`
-4. `workflows/run-full-delivery-loop.md`
-5. `qa/qa-evidence-standard.md`
+1. `charter/what-we-are-building.md`
+2. `missions/mission-intake-template.md`
+3. `workflows/run-full-delivery-loop.md`
+4. `qa/qa-evidence-standard.md`
+5. `governance/merge-approval-checklist.md`
+
+Read `MASTER_AGENT.md` only when you are running an actual software or delivery mission.
 
 Optional deeper references live in `/doctrine`, `/principles`, `/governance`, and `/docs`.
+
+## Clean Entry Path
+
+Use one path, in this order:
+
+```text
+START_HERE.md
+→ charter/what-we-are-building.md
+→ missions/mission-intake-template.md
+→ workflows/run-full-delivery-loop.md
+→ qa/qa-evidence-standard.md
+→ governance/merge-approval-checklist.md
+```
+
+Do not start by hopping between README, doctrine files, board language, and agent prompts.
+
+The system should feel like one route, not ten.
 
 ## Simplicity Failure Condition
 
@@ -110,6 +161,8 @@ Do not start with:
 
 Prove the workflow first.
 
+Do not expand the operating system faster than the loop is being proven.
+
 ## Mission 002 Test
 
 Mission 002 validates whether Agent-007 can create a useful mission packet and supporting evidence without becoming governance theater.
@@ -117,3 +170,27 @@ Mission 002 validates whether Agent-007 can create a useful mission packet and s
 The test question:
 
 Can someone understand and use Agent-007 without Kevin explaining everything live?
+
+## Current Mission Status
+
+- Mission 001: closed
+- Mission 002: closed with process corrections
+- Mission 003: completed as the first real product mission
+
+## Milestone Path
+
+### Milestone 1: Operating loop closed
+
+- Mission 001 closed
+- Mission 002 closed
+- README updated
+
+### Milestone 2: First product mission
+
+- Mission 003 creates 4 Walls Module 1
+- Agent-007 proves idea-to-teaching-asset workflow
+
+### Milestone 3: First repeatability test
+
+- run same process on Merlin or Pokemon Sim
+- compare whether the workflow still works

@@ -6,7 +6,7 @@
 
 ## Start Here
 
-Open [START_HERE.md](/Users/kevinmedeiros/Downloads/agent-007/START_HERE.md) first.
+Open [START_HERE.md](START_HERE.md) first.
 
 That file is the default entry point for this repo and the shortest path to understanding:
 
@@ -19,11 +19,11 @@ Read the rest of the repo after `START_HERE.md`, not before it.
 
 Then follow this order:
 
-1. [START_HERE.md](/Users/kevinmedeiros/Downloads/agent-007/START_HERE.md)
-2. [charter/what-we-are-building.md](/Users/kevinmedeiros/Downloads/agent-007/charter/what-we-are-building.md)
-3. [missions/mission-intake-template.md](/Users/kevinmedeiros/Downloads/agent-007/missions/mission-intake-template.md)
-4. [workflows/run-full-delivery-loop.md](/Users/kevinmedeiros/Downloads/agent-007/workflows/run-full-delivery-loop.md)
-5. [MASTER_AGENT.md](/Users/kevinmedeiros/Downloads/agent-007/MASTER_AGENT.md) only when running a software or delivery mission
+1. [START_HERE.md](START_HERE.md)
+2. [charter/what-we-are-building.md](charter/what-we-are-building.md)
+3. [missions/mission-intake-template.md](missions/mission-intake-template.md)
+4. [workflows/run-full-delivery-loop.md](workflows/run-full-delivery-loop.md)
+5. [MASTER_AGENT.md](MASTER_AGENT.md) only when running a software or delivery mission
 
 ---
 

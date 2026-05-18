@@ -16,57 +16,83 @@ This file is not permanent history.
 
 ## Mission / PR / Issue
 
-Mission 005 / Issue #110 — Replay Coaching Summary
+Merlin readiness mission
 
 ## Related GitHub Artifacts
 
-- Repo: `TheYfactora12/Pokemon-Champions-Sim-Planner`
-- PR: `#109`, `#111`
-- Issue: `#110`
-- Branch: `mission-005-replay-summary-slice`, `issue-110-replay-summary-ux`
-- Commit: `9515702`, `fe50256`
+- Repo: `TheYfactora12/agent-007`, `TheYfactora12/Secure-Local--AI-Merlin`
+- PR: `agent-007 #8`, `Secure-Local--AI-Merlin #141`
+- Issue: `none`
+- Branch: `merlin-readiness-mission`, `merlin-release-state-reconciliation`
+- Commit: `8032279`, `e4c0a54`
 
 ## Bottom line
 
-Mission 005 shipped a bounded replay-card Coaching Summary. Issue #110 tightened the UX by making the summary loss-only.
+The Merlin readiness mission concluded that the smallest useful next artifact is
+one release-state reconciliation note, and that note has now been merged in
+Merlin PR `#141`.
 
 ## Why it matters
 
-Agent-007 proved it can take a vague coaching idea, bound it, implement it safely, catch overclaim risk, simplify before merge, and preserve the learning.
+Merlin’s product direction is clear, but repo-level readiness claims are not
+fully aligned. That creates decision noise before the next real Merlin mission.
 
 ## What changed
 
-- Pokémon Sim PR #109 shipped the conservative replay-card Coaching Summary.
-- Strategy context and plan mismatch were removed before merge.
-- Issue #110 made the summary loss-only and removed dead plan-mismatch styling.
-- Training card captured the overclaim lesson.
+- Added a Merlin readiness mission packet.
+- Added a Merlin readiness brief.
+- Added a Merlin QA/evidence note.
+- Added a Merlin risks/limitations note.
+- Merlin PR `#141` merged `docs/operations/MERLIN_RELEASE_STATE_RECONCILIATION.md`.
+- Kept the mission documentation-only.
+
+## Files inspected
+
+- `README.md`
+- `docs/MERLIN_IMPLEMENTATION_ROADMAP.md`
+- `docs/product/PRODUCT_NORTH_STAR.md`
+- `docs/operations/TRUSTED_LOCAL_BETA_EVIDENCE.md`
+- `docs/operations/FAILURE_LEARNING_LOOP.md`
+- `docs/CANONICAL_PROJECT_STATE.md`
+- `docs/README.md`
+- `tests/README.md`
+
+## Artifacts created or blocked
+
+- Created: `missions/merlin-readiness-mission-packet.md`
+- Created: `docs/merlin-readiness-brief.md`
+- Created: `qa/merlin-readiness-evidence-note.md`
+- Created: `governance/merlin-readiness-risks-and-limitations.md`
+- Created and merged in Merlin PR `#141`: `docs/operations/MERLIN_RELEASE_STATE_RECONCILIATION.md`
+- Blocked: no Merlin code, runtime, or production changes by mission scope
 
 ## Files changed
 
-Pokémon Sim shipped changes in:
-
-- `poke-sim/ui.js`
-- `poke-sim/style.css`
-- `poke-sim/tests/t93_replay_log_cap_tests.js`
-- `poke-sim/tests/phase5_turn_log_tests.js`
+- `missions/merlin-readiness-mission-packet.md`
+- `docs/merlin-readiness-brief.md`
+- `qa/merlin-readiness-evidence-note.md`
+- `governance/merlin-readiness-risks-and-limitations.md`
 
 ## Tests / verification
 
-Reported tests:
+Inspection-only mission.
 
-- node poke-sim/tests/t93_replay_log_cap_tests.js
-- node poke-sim/tests/phase5_turn_log_tests.js
-- node poke-sim/tests/phase6_coaching_voice.js where applicable
+Verification used:
+
+- safe repo discovery for Merlin
+- high-level Merlin doc inspection
+- `node scripts/check-agent-007-handoff.mjs`
 
 ## Risks / limitations
 
-- Real-user usefulness still needs observation.
-- not enough evidence may appear too often.
-- execution detection depends on csBuildDecisionAudit(...).
+- No Merlin code, tests, or runtime validation were performed.
+- This is a readiness recommendation, not implementation proof.
+- The recommendation depends on current docs staying representative of repo
+  truth.
 
 ## Governance status
 
-Proceed
+Simplify
 
 ## Approval required?
 
@@ -74,17 +100,19 @@ No
 
 ## What ChatGPT should review
 
-- whether this handoff is complete
-- whether any new mission is justified
-- whether training-card or learning artifact is needed
+- whether the recommendation is the smallest useful next Merlin artifact
+- whether the readiness-claim mismatch is real and sufficiently evidenced
+- whether Agent-007 PR `#8` now records the Merlin readiness mission accurately
 
 ## What Kevin must decide
 
-Whether to keep observing or start a new bounded mission based on real user evidence.
+Whether to merge Agent-007 PR `#8` as the record of the Merlin readiness
+mission and keep Merlin implementation paused.
 
 ## Next recommended action
 
-No action. Keep using the shipped slice until a real problem appears.
+Record Merlin PR `#141` as merged and keep Merlin implementation paused. Do not
+start Merlin implementation work unless a new mission is explicitly approved.
 
 ## Hard limits confirmed
 
@@ -97,8 +125,8 @@ No action. Keep using the shipped slice until a real problem appears.
 
 ## Training card needed?
 
-Already captured: mission-005-overclaim-risk-strategy-context.md
+No
 
 ## Learning artifact needed?
 
-Already captured.
+No

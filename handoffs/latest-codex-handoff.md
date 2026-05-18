@@ -16,83 +16,67 @@ This file is not permanent history.
 
 ## Mission / PR / Issue
 
-Merlin readiness mission
+Agent-007 v1.4 Direct Use Setup Pack / PR #9 / Issue #10
 
 ## Related GitHub Artifacts
 
-- Repo: `TheYfactora12/agent-007`, `TheYfactora12/Secure-Local--AI-Merlin`
-- PR: `agent-007 #8`, `Secure-Local--AI-Merlin #141`
-- Issue: `none`
-- Branch: `merlin-readiness-mission`, `merlin-release-state-reconciliation`
-- Commit: `8032279`, `e4c0a54`
+- Repo: `TheYfactora12/agent-007`
+- PR: `#9`
+- Issue: `#10`
+- Branch: `agent-007-direct-use-setup`
+- Commit: `cd5f92a`
 
 ## Bottom line
 
-The Merlin readiness mission concluded that the smallest useful next artifact is
-one release-state reconciliation note, and that note has now been merged in
-Merlin PR `#141`.
+The direct use setup pack is ready for review as a docs/setup-only package that
+helps Kevin use Agent-007 more directly in ChatGPT Projects, a private Custom
+GPT, and Perplexity with less copy/paste.
 
 ## Why it matters
 
-Merlin’s product direction is clear, but repo-level readiness claims are not
-fully aligned. That creates decision noise before the next real Merlin mission.
+This reduces manual setup friction without adding runtime automation, Actions,
+external integrations, API keys, or approval bypasses.
 
 ## What changed
 
-- Added a Merlin readiness mission packet.
-- Added a Merlin readiness brief.
-- Added a Merlin QA/evidence note.
-- Added a Merlin risks/limitations note.
-- Merlin PR `#141` merged `docs/operations/MERLIN_RELEASE_STATE_RECONCILIATION.md`.
-- Kept the mission documentation-only.
-
-## Files inspected
-
-- `README.md`
-- `docs/MERLIN_IMPLEMENTATION_ROADMAP.md`
-- `docs/product/PRODUCT_NORTH_STAR.md`
-- `docs/operations/TRUSTED_LOCAL_BETA_EVIDENCE.md`
-- `docs/operations/FAILURE_LEARNING_LOOP.md`
-- `docs/CANONICAL_PROJECT_STATE.md`
-- `docs/README.md`
-- `tests/README.md`
-
-## Artifacts created or blocked
-
-- Created: `missions/merlin-readiness-mission-packet.md`
-- Created: `docs/merlin-readiness-brief.md`
-- Created: `qa/merlin-readiness-evidence-note.md`
-- Created: `governance/merlin-readiness-risks-and-limitations.md`
-- Created and merged in Merlin PR `#141`: `docs/operations/MERLIN_RELEASE_STATE_RECONCILIATION.md`
-- Blocked: no Merlin code, runtime, or production changes by mission scope
+- Added ChatGPT Project instructions.
+- Added Custom GPT instructions.
+- Added a knowledge-file list.
+- Added conversation starters.
+- Added a future Actions readiness note.
+- Added a Perplexity research scout prompt.
+- Added a shared direct-use setup checklist.
+- Added one short `START_HERE.md` direct-use reference.
 
 ## Files changed
 
-- `missions/merlin-readiness-mission-packet.md`
-- `docs/merlin-readiness-brief.md`
-- `qa/merlin-readiness-evidence-note.md`
-- `governance/merlin-readiness-risks-and-limitations.md`
+- `START_HERE.md`
+- `integrations/chatgpt/agent-007-project-instructions.md`
+- `integrations/chatgpt/agent-007-custom-gpt-instructions.md`
+- `integrations/chatgpt/agent-007-knowledge-file-list.md`
+- `integrations/chatgpt/agent-007-conversation-starters.md`
+- `integrations/chatgpt/agent-007-actions-readiness-note.md`
+- `integrations/perplexity/agent-007-research-scout-prompt.md`
+- `integrations/shared/agent-007-direct-use-setup-checklist.md`
 
 ## Tests / verification
 
-Inspection-only mission.
-
 Verification used:
 
-- safe repo discovery for Merlin
-- high-level Merlin doc inspection
+- `find integrations -maxdepth 3 -type f -print | sort`
+- `grep -n "Direct Use Setup" START_HERE.md`
 - `node scripts/check-agent-007-handoff.mjs`
 
 ## Risks / limitations
 
-- No Merlin code, tests, or runtime validation were performed.
-- This is a readiness recommendation, not implementation proof.
-- The recommendation depends on current docs staying representative of repo
-  truth.
+- This does not create or configure ChatGPT Projects, Custom GPTs, Perplexity,
+  Actions, or API keys automatically.
+- Kevin must still do setup manually in the ChatGPT and Perplexity UIs.
+- This is setup packaging only, not implementation or automation.
 
 ## Governance status
 
-Simplify
+Proceed
 
 ## Approval required?
 
@@ -100,19 +84,20 @@ No
 
 ## What ChatGPT should review
 
-- whether the recommendation is the smallest useful next Merlin artifact
-- whether the readiness-claim mismatch is real and sufficiently evidenced
-- whether Agent-007 PR `#8` now records the Merlin readiness mission accurately
+- whether the setup pack is complete enough for direct manual use
+- whether the docs preserve GitHub as source of truth
+- whether the package avoids pretending Codex can configure third-party tools
+  automatically
 
 ## What Kevin must decide
 
-Whether to merge Agent-007 PR `#8` as the record of the Merlin readiness
-mission and keep Merlin implementation paused.
+Whether PR `#9` is ready to merge as the recorded setup pack for direct
+ChatGPT/Perplexity use.
 
 ## Next recommended action
 
-Record Merlin PR `#141` as merged and keep Merlin implementation paused. Do not
-start Merlin implementation work unless a new mission is explicitly approved.
+Review PR `#9`. Do not add runtime automation, Actions, external integrations,
+or new Agent-007 framework as part of this setup pack.
 
 ## Hard limits confirmed
 

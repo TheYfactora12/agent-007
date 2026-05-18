@@ -22,9 +22,13 @@ function read(rel) {
   return fs.readFileSync(filePath(rel), 'utf8');
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function section(text, heading) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const re = new RegExp(`^${escaped}\\s*$([\\s\\S]*?)(?=^##\\s|^#\\s|\\z)`, 'm');
+  const escaped = escapeRegExp(heading);
+  const re = new RegExp(`^${escaped}\\s*$([\\s\\S]*?)(?=^##\\s|^#\\s|$)`, 'm');
   const match = text.match(re);
   return match ? match[1].trim() : '';
 }
@@ -97,10 +101,12 @@ if (failures.length === 0) {
   const mission006Allowed = /(not started|do not start|no mission 006)/i;
   for (const rel of mission006Files) {
     const text = read(rel);
-    const idx = text.toLowerCase().indexOf('mission 006');
-    if (idx !== -1) {
+    const lower = text.toLowerCase();
+    let idx = lower.indexOf('mission 006');
+    while (idx !== -1) {
       const windowText = text.slice(Math.max(0, idx - 120), idx + 160);
       if (!mission006Allowed.test(windowText)) fail(`Mission 006 mention lacks stop/negative context in: ${rel}`);
+      idx = lower.indexOf('mission 006', idx + 1);
     }
   }
 

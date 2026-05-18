@@ -97,6 +97,18 @@ GitHub remains the source of truth.
 
 Kevin still approves protected actions like merges, deploys, schema changes, spend, and public claims.
 
+## Check Runner
+
+Agent-007 handoff checks can be run with:
+
+```bash
+node scripts/check-agent-007-handoff.mjs
+```
+
+The check runner validates relay handoff structure only.
+
+It does not approve work.
+
 ## The Core Rule
 
 If Agent-007 does not make the next right action clearer, safer, simpler, or more teachable, it is creating noise.

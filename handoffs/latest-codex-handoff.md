@@ -66,11 +66,11 @@ Reported tests:
 
 ## Governance status
 
-Proceed.
+Proceed
 
 ## Approval required?
 
-No immediate approval required unless starting a new mission.
+No
 
 ## What ChatGPT should review
 
@@ -88,7 +88,7 @@ No action. Keep using the shipped slice until a real problem appears.
 
 ## Hard limits confirmed
 
-- no merge pending
+- no merge
 - no deploy
 - no spend
 - no secrets

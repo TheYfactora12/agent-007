@@ -81,6 +81,22 @@ Start with:
 
 - `training-cards/mission-005-overclaim-risk-strategy-context.md`
 
+## Relay Workflow
+
+Before copying long Codex outputs into ChatGPT, ask Codex to update:
+
+`handoffs/latest-codex-handoff.md`
+
+Then ask ChatGPT:
+
+`Review the latest Codex handoff.`
+
+Use the relay to reduce copy/paste, not to bypass governance.
+
+GitHub remains the source of truth.
+
+Kevin still approves protected actions like merges, deploys, schema changes, spend, and public claims.
+
 ## The Core Rule
 
 If Agent-007 does not make the next right action clearer, safer, simpler, or more teachable, it is creating noise.

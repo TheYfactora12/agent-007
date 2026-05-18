@@ -29,8 +29,8 @@ Merlin readiness mission
 ## Bottom line
 
 The Merlin readiness mission concluded that the smallest useful next artifact is
-one release-state reconciliation note, and that note is now opened for review
-in Merlin PR `#141`.
+one release-state reconciliation note, and that note has now been merged in
+Merlin PR `#141`.
 
 ## Why it matters
 
@@ -43,7 +43,7 @@ fully aligned. That creates decision noise before the next real Merlin mission.
 - Added a Merlin readiness brief.
 - Added a Merlin QA/evidence note.
 - Added a Merlin risks/limitations note.
-- Opened Merlin PR `#141` for `docs/operations/MERLIN_RELEASE_STATE_RECONCILIATION.md`.
+- Merlin PR `#141` merged `docs/operations/MERLIN_RELEASE_STATE_RECONCILIATION.md`.
 - Kept the mission documentation-only.
 
 ## Files inspected
@@ -63,7 +63,7 @@ fully aligned. That creates decision noise before the next real Merlin mission.
 - Created: `docs/merlin-readiness-brief.md`
 - Created: `qa/merlin-readiness-evidence-note.md`
 - Created: `governance/merlin-readiness-risks-and-limitations.md`
-- Created in Merlin PR `#141`: `docs/operations/MERLIN_RELEASE_STATE_RECONCILIATION.md`
+- Created and merged in Merlin PR `#141`: `docs/operations/MERLIN_RELEASE_STATE_RECONCILIATION.md`
 - Blocked: no Merlin code, runtime, or production changes by mission scope
 
 ## Files changed
@@ -102,17 +102,17 @@ No
 
 - whether the recommendation is the smallest useful next Merlin artifact
 - whether the readiness-claim mismatch is real and sufficiently evidenced
-- whether Merlin PR `#141` stays inside documentation-only reconciliation scope
+- whether Agent-007 PR `#8` now records the Merlin readiness mission accurately
 
 ## What Kevin must decide
 
-Whether Merlin PR `#141` is the right bounded next step before any Merlin
-implementation work.
+Whether to merge Agent-007 PR `#8` as the record of the Merlin readiness
+mission and keep Merlin implementation paused.
 
 ## Next recommended action
 
-Review Merlin PR `#141`. Do not start Merlin implementation work until that
-documentation-only release-state note is reviewed and explicitly approved.
+Record Merlin PR `#141` as merged and keep Merlin implementation paused. Do not
+start Merlin implementation work unless a new mission is explicitly approved.
 
 ## Hard limits confirmed
 

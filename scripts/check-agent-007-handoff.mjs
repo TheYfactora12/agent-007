@@ -26,11 +26,22 @@ function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function normalizeInline(value) {
+  return value
+    .toLowerCase()
+    .replace(/[`*_]/g, '')
+    .replace(/[.:!?]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function section(text, heading) {
-  const escaped = escapeRegExp(heading);
-  const re = new RegExp(`^${escaped}\\s*$([\\s\\S]*?)(?=^##\\s|^#\\s|$)`, 'm');
-  const match = text.match(re);
-  return match ? match[1].trim() : '';
+  const start = text.indexOf(heading);
+  if (start === -1) return '';
+  const afterHeading = text.slice(start + heading.length);
+  const nextHeadingMatch = afterHeading.match(/\n##\s|\n#\s/);
+  const body = nextHeadingMatch ? afterHeading.slice(0, nextHeadingMatch.index) : afterHeading;
+  return body.trim();
 }
 
 const requiredFiles = [
@@ -68,20 +79,37 @@ if (failures.length === 0) {
   }
 
   const gov = section(latest, '## Governance status');
-  const allowedGov = ['Proceed', 'Simplify', 'Pause', 'Reject', 'Needs Kevin approval'];
-  if (!allowedGov.some((v) => gov.includes(v))) {
+  const normalizedGov = normalizeInline(gov);
+  const allowedGov = ['proceed', 'simplify', 'pause', 'reject', 'needs kevin approval'];
+  if (!allowedGov.some((v) => normalizedGov.includes(v))) {
     fail(`Governance status must include one of: ${allowedGov.join(', ')}`);
   }
 
   const approval = section(latest, '## Approval required?');
-  const allowedApproval = ['No', 'Kevin approval', 'Committee / board review'];
-  if (!allowedApproval.some((v) => approval.includes(v))) {
+  const normalizedApproval = normalizeInline(approval);
+  const allowedApproval = ['no', 'kevin approval', 'committee / board review'];
+  const approvalAliases = [
+    'no immediate approval required',
+    'committee board review'
+  ];
+  if (!allowedApproval.some((v) => normalizedApproval.includes(normalizeInline(v))) &&
+      !approvalAliases.some((v) => normalizedApproval.includes(normalizeInline(v)))) {
     fail(`Approval required must include one of: ${allowedApproval.join(', ')}`);
   }
 
-  const hardLimits = section(latest, '## Hard limits confirmed').toLowerCase();
-  for (const phrase of ['no merge', 'no deploy', 'no spend', 'no secrets', 'no supabase', 'no production change']) {
-    if (!hardLimits.includes(phrase)) fail(`Hard limits missing phrase: ${phrase}`);
+  const hardLimits = normalizeInline(section(latest, '## Hard limits confirmed'));
+  const hardLimitChecks = [
+    ['no merge', ['no merge', 'no merge pending', 'no merge unless approved']],
+    ['no deploy', ['no deploy']],
+    ['no spend', ['no spend']],
+    ['no secrets', ['no secrets']],
+    ['no supabase', ['no supabase', 'no supabase schema change', 'no supabase/schema change']],
+    ['no production change', ['no production change', 'no production changes']]
+  ];
+  for (const [label, variants] of hardLimitChecks) {
+    if (!variants.some((phrase) => hardLimits.includes(normalizeInline(phrase)))) {
+      fail(`Hard limits missing phrase: ${label}`);
+    }
   }
 
   const coreDocs = [

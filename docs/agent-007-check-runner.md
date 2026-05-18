@@ -29,13 +29,28 @@ node scripts/check-agent-007-handoff.mjs
 The checker validates that:
 
 - required relay files exist
-- `handoffs/latest-codex-handoff.md` has required sections
-- governance status uses an approved value
-- approval required uses an approved value
+- `handoffs/latest-codex-handoff.md` has required sections and headings
+- governance status uses an approved value after safe normalization
+- approval required uses an approved value after safe normalization
 - hard limits include merge, deploy, spend, secrets, Supabase, and production-change controls
 - core docs do not contain local `/Users/` paths
 - `Mission 006` references are framed as not started or do-not-start language
 - `START_HERE.md` points to the check runner command
+
+## Normalization rule
+
+Headings are required.
+
+Values are normalized only where that is safe and useful.
+
+Examples the checker may accept:
+
+- `Proceed.`
+- `No immediate approval required unless...`
+- `no merge pending`
+- `no Supabase/schema change`
+
+The checker should catch missing governance fields, not force brittle wording when the meaning is already clear.
 
 ## What it does not do
 
@@ -54,6 +69,8 @@ The checker does not:
 ## Governance
 
 This is validation-only automation.
+
+It validates structure, not judgment.
 
 Kevin approval gates remain unchanged.
 

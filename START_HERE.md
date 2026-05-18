@@ -8,6 +8,8 @@ Agent-007 is Kevin's personal AI operating system for cutting through noise, rou
 
 Use this file first.
 
+Before new work, check relevant training cards.
+
 If you only read one thing, read this.
 
 ## What Agent-007 Does
@@ -16,6 +18,12 @@ Agent-007 helps Kevin move from:
 
 ```text
 idea → mission packet → risk route → execution artifact → evidence → lesson
+```
+
+Training sharpens that loop:
+
+```text
+mission → output → review → correction → lesson → reusable rule/example
 ```
 
 It is not meant to create more documents for their own sake.
@@ -59,6 +67,20 @@ Use Agent-007 when Kevin has:
 8. Capture what was learned.
 9. Simplify anything that creates noise.
 
+If a mission exposes a repeatable mistake, add or update one training card.
+
+## Training Cards
+
+Before starting work similar to a previous mission, check `/training-cards`.
+
+Training cards are short lessons from real missions.
+
+Use them to avoid repeated mistakes, not to add process.
+
+Start with:
+
+- `training-cards/mission-005-overclaim-risk-strategy-context.md`
+
 ## The Core Rule
 
 If Agent-007 does not make the next right action clearer, safer, simpler, or more teachable, it is creating noise.
@@ -97,6 +119,8 @@ Never merge to main, deploy, spend over cap, handle secrets, or take irreversibl
 3. `workflows/run-full-delivery-loop.md`
 4. `qa/qa-evidence-standard.md`
 5. `governance/merge-approval-checklist.md`
+6. `training-cards/README.md`
+7. `training-cards/`
 
 Read `MASTER_AGENT.md` only when you are running an actual software or delivery mission.
 

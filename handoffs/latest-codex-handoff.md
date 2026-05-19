@@ -24,7 +24,7 @@ Agent-007 v1.4 Direct Use Setup Pack / PR #9 / Issue #10
 - PR: `#9`
 - Issue: `#10`
 - Branch: `agent-007-direct-use-setup`
-- Commit: `cd5f92a`
+- Commit: `e125ca29ec477b1e5bca87b5cfa7cae4d1203b5e`
 
 ## Bottom line
 
@@ -51,6 +51,7 @@ external integrations, API keys, or approval bypasses.
 ## Files changed
 
 - `START_HERE.md`
+- `handoffs/latest-codex-handoff.md`
 - `integrations/chatgpt/agent-007-project-instructions.md`
 - `integrations/chatgpt/agent-007-custom-gpt-instructions.md`
 - `integrations/chatgpt/agent-007-knowledge-file-list.md`

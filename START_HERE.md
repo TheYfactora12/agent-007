@@ -109,6 +109,19 @@ The check runner validates relay handoff structure only.
 
 It does not approve work.
 
+## Direct Use Setup
+
+For direct use in ChatGPT or Perplexity, see:
+
+- `integrations/shared/agent-007-direct-use-setup-checklist.md`
+- `integrations/chatgpt/agent-007-project-instructions.md`
+- `integrations/chatgpt/agent-007-custom-gpt-instructions.md`
+- `integrations/perplexity/agent-007-research-scout-prompt.md`
+
+Direct use does not bypass governance.
+
+Kevin still approves protected actions.
+
 ## The Core Rule
 
 If Agent-007 does not make the next right action clearer, safer, simpler, or more teachable, it is creating noise.

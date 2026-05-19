@@ -23,8 +23,7 @@ Agent-007 v1.4 Direct Use Setup Pack / PR #9 / Issue #10
 - Repo: `TheYfactora12/agent-007`
 - PR: `#9`
 - Issue: `#10`
-- Branch: `agent-007-direct-use-setup`
-- Commit: `acfd12ece958bb46b3ae3c02d720b7b509e01b27`
+- Branch/ref: `agent-007-direct-use-setup` / PR `#9` current head at review time
 
 ## Bottom line
 

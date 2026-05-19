@@ -16,20 +16,19 @@ This file is not permanent history.
 
 ## Mission / PR / Issue
 
-Agent-007 v1.4 Direct Use Setup Pack / PR #9 / Issue #10
+Agent-007 post-merge direct-use setup verification
 
 ## Related GitHub Artifacts
 
 - Repo: `TheYfactora12/agent-007`
-- PR: `#9`
+- PR: `#9` merged
 - Issue: `#10`
-- Branch/ref: `agent-007-direct-use-setup` / PR `#9` current head at review time
+- Branch/ref: `main` after merge commit `dd87a6e1d55a66860e78d29b6582ba7e079ef71d`
 
 ## Bottom line
 
-The direct use setup pack is ready for review as a docs/setup-only package that
-helps Kevin use Agent-007 more directly in ChatGPT Projects, a private Custom
-GPT, and Perplexity with less copy/paste.
+The direct-use setup pack is merged and safe for Kevin to use manually in
+ChatGPT Projects, a private Custom GPT, and Perplexity.
 
 ## Why it matters
 
@@ -38,33 +37,22 @@ external integrations, API keys, or approval bypasses.
 
 ## What changed
 
-- Added ChatGPT Project instructions.
-- Added Custom GPT instructions.
-- Added a knowledge-file list.
-- Added conversation starters.
-- Added a future Actions readiness note.
-- Added a Perplexity research scout prompt.
-- Added a shared direct-use setup checklist.
-- Added one short `START_HERE.md` direct-use reference.
+- Verified the merged setup-pack files are present on `main`.
+- Added one post-merge setup verification note.
+- Kept the scope limited to manual setup guidance only.
 
 ## Files changed
 
-- `START_HERE.md`
 - `handoffs/latest-codex-handoff.md`
-- `integrations/chatgpt/agent-007-project-instructions.md`
-- `integrations/chatgpt/agent-007-custom-gpt-instructions.md`
-- `integrations/chatgpt/agent-007-knowledge-file-list.md`
-- `integrations/chatgpt/agent-007-conversation-starters.md`
-- `integrations/chatgpt/agent-007-actions-readiness-note.md`
-- `integrations/perplexity/agent-007-research-scout-prompt.md`
-- `integrations/shared/agent-007-direct-use-setup-checklist.md`
+- `integrations/shared/agent-007-direct-use-post-merge-verification.md`
 
 ## Tests / verification
 
 Verification used:
 
+- `git status`
+- `git log --oneline -5`
 - `find integrations -maxdepth 3 -type f -print | sort`
-- `grep -n "Direct Use Setup" START_HERE.md`
 - `node scripts/check-agent-007-handoff.mjs`
 
 ## Risks / limitations
@@ -72,7 +60,7 @@ Verification used:
 - This does not create or configure ChatGPT Projects, Custom GPTs, Perplexity,
   Actions, or API keys automatically.
 - Kevin must still do setup manually in the ChatGPT and Perplexity UIs.
-- This is setup packaging only, not implementation or automation.
+- No new mission is justified by this verification alone.
 
 ## Governance status
 
@@ -84,20 +72,19 @@ No
 
 ## What ChatGPT should review
 
-- whether the setup pack is complete enough for direct manual use
-- whether the docs preserve GitHub as source of truth
-- whether the package avoids pretending Codex can configure third-party tools
-  automatically
+- whether the merged setup pack is clean and ready for manual use
+- whether the verification note is clear enough for Kevin to follow directly
+- whether direct use remains safely manual and governance-preserving
 
 ## What Kevin must decide
 
-Whether PR `#9` is ready to merge as the recorded setup pack for direct
-ChatGPT/Perplexity use.
+Whether to start using the merged setup pack directly in ChatGPT and Perplexity
+without further Agent-007 expansion.
 
 ## Next recommended action
 
-Review PR `#9`. Do not add runtime automation, Actions, external integrations,
-or new Agent-007 framework as part of this setup pack.
+Use the merged setup pack directly. Do not start Mission 006 unless Kevin
+explicitly approves a new bounded mission.
 
 ## Hard limits confirmed
 

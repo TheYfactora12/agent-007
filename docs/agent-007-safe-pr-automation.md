@@ -2,7 +2,7 @@
 
 ## Bottom line
 
-Agent-007 now has the safest useful PR automation:
+Agent-007 now has the safest useful PR automation at Levels 2 and 3:
 
 - a read-only GitHub Actions check that runs the existing handoff checker
 - a PR template that forces minimum evidence and governance fields
@@ -10,6 +10,10 @@ Agent-007 now has the safest useful PR automation:
 This is validation automation only.
 
 It is not AI automation.
+
+See also:
+
+- `docs/agent-007-automation-roadmap.md`
 
 ## What the check means
 
@@ -59,3 +63,4 @@ Only after this proves useful:
 
 - keep the same read-only check in GitHub Actions
 - do not add write-side automation unless Kevin explicitly approves it
+- move up the roadmap one level at a time, not all at once

@@ -118,6 +118,7 @@ See:
 - `.github/workflows/agent-007-handoff-check.yml`
 - `.github/pull_request_template.md`
 - `docs/agent-007-safe-pr-automation.md`
+- `docs/agent-007-automation-roadmap.md`
 
 Passing the check means structure is present.
 

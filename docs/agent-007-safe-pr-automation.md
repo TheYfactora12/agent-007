@@ -66,6 +66,10 @@ The only Level 5 write is one human-triggered PR comment containing a review
 packet, posted through the GitHub REST issue-comment path from the trusted
 default-branch workflow. It is not approval.
 
+GitHub currently requires `pull-requests: write` in this workflow context for
+that PR comment post to succeed. Agent-007 still uses that permission only for
+the single requested review packet comment.
+
 ## Next safe upgrade
 
 Only after this proves useful:

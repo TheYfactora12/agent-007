@@ -125,6 +125,7 @@ What it is:
 - respond to an explicit command such as `/agent007 review`
 - publish one bounded review packet comment only when intentionally triggered
 - reuse the local Level 4 triage logic from the trusted default branch
+- use the minimum GitHub write scope needed for that one PR comment
 
 Why it is higher risk:
 

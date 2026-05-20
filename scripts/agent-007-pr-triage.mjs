@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -37,6 +38,14 @@ function ghJson(args) {
 
 export function normalizeText(value) {
   return (value || '').replace(/\r/g, '').trim();
+}
+
+function normalizeInline(value) {
+  return normalizeText(value)
+    .toLowerCase()
+    .replace(/[`*_]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 export function section(text, heading) {
@@ -91,6 +100,191 @@ export function summarizeFiles(files) {
   });
 }
 
+function readLocalHandoff() {
+  const handoffPath = path.join(process.cwd(), 'handoffs/latest-codex-handoff.md');
+  if (!fs.existsSync(handoffPath)) return '';
+  return fs.readFileSync(handoffPath, 'utf8');
+}
+
+function listSectionItems(text, heading) {
+  const body = section(text, heading);
+  if (!body) return [];
+  return body
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith('- '))
+    .map((line) => line.slice(2).trim());
+}
+
+function parseArtifactValue(text, label) {
+  const body = section(text, 'Related GitHub Artifacts');
+  if (!body) return '';
+  const match = body.match(new RegExp(`-\\s+${label}:\\s+(.+)`));
+  return match ? normalizeText(match[1]) : '';
+}
+
+function parsePrNumber(text) {
+  const prValue = parseArtifactValue(text, 'PR');
+  const match = prValue.match(/#(\d+)/);
+  return match ? Number(match[1]) : null;
+}
+
+function parseHeadSha(text) {
+  const raw = parseArtifactValue(text, 'Head SHA');
+  const match = raw.match(/\b[0-9a-f]{7,40}\b/i);
+  return match ? match[0] : '';
+}
+
+function parseReviewedHeadSha(text) {
+  const reviewed = parseArtifactValue(text, 'Reviewed PR head');
+  const fallback = parseHeadSha(text);
+  const raw = reviewed || fallback;
+  const match = raw.match(/\b[0-9a-f]{7,40}\b/i);
+  return match ? match[0] : '';
+}
+
+function parseHandoffUpdateCommit(text) {
+  const raw = parseArtifactValue(text, 'Handoff update commit');
+  const match = raw.match(/\b[0-9a-f]{7,40}\b/i);
+  return match ? match[0] : '';
+}
+
+function parseBranchRef(text) {
+  return parseArtifactValue(text, 'Branch/ref');
+}
+
+function hasPendingPrLanguage(text) {
+  const prValue = normalizeInline(parseArtifactValue(text, 'PR'));
+  return prValue.includes('pending create') || prValue.includes('none yet');
+}
+
+function hasMergedPrLanguage(text) {
+  const prValue = normalizeInline(parseArtifactValue(text, 'PR'));
+  return prValue.includes('merged');
+}
+
+function normalizeListItem(value) {
+  return normalizeInline(value.replace(/^\[[ x]\]\s+/i, '').replace(/^-\s+/, ''));
+}
+
+function setDifference(left, right) {
+  const rightSet = new Set(right);
+  return left.filter((item) => !rightSet.has(item));
+}
+
+function localOnlyHandoffRefresh(reviewedSha, liveSha) {
+  if (!reviewedSha || !liveSha || reviewedSha.toLowerCase() === liveSha.toLowerCase()) {
+    return false;
+  }
+
+  try {
+    const raw = execFileSync('git', ['diff', '--name-only', `${reviewedSha}..${liveSha}`], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe']
+    });
+    const files = raw
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+    return files.length === 1 && files[0] === 'handoffs/latest-codex-handoff.md';
+  } catch {
+    return false;
+  }
+}
+
+function compareListSection(flags, label, expectedItems, actualItems) {
+  const normalizedExpected = expectedItems.map(normalizeListItem);
+  const normalizedActual = actualItems.map(normalizeListItem);
+  const missingFromActual = setDifference(normalizedExpected, normalizedActual);
+  const extraInActual = setDifference(normalizedActual, normalizedExpected);
+
+  if (missingFromActual.length || extraInActual.length) {
+    flags.push(`${label} drift between live PR data and latest handoff`);
+  }
+}
+
+function staleCloseoutFlags(pr, handoff, flags) {
+  if (!handoff) return;
+
+  const nextAction = normalizeInline(section(handoff, 'Next recommended action'));
+  const kevinDecision = normalizeInline(section(handoff, 'What Kevin must decide'));
+
+  if (pr.mergedAt) {
+    if (!hasMergedPrLanguage(handoff)) {
+      flags.push('latest handoff does not record that the PR is merged');
+    }
+
+    if (nextAction.includes('open the pr') ||
+        nextAction.includes('leave it unmerged') ||
+        nextAction.includes('review the') ||
+        nextAction.includes('confirm the check runs')) {
+      flags.push('latest handoff next action is stale for a merged PR');
+    }
+
+    if (kevinDecision && !kevinDecision.includes('no decision pending')) {
+      flags.push('latest handoff still shows a Kevin decision pending after PR merge');
+    }
+  } else if (pr.state === 'OPEN' && hasMergedPrLanguage(handoff)) {
+    flags.push('latest handoff says the PR is merged while GitHub still shows it open');
+  }
+}
+
+function handoffDriftFlags(pr, handoff) {
+  const flags = [];
+  if (!handoff) {
+    flags.push('latest handoff file not found for local drift comparison');
+    return flags;
+  }
+
+  const handoffPrNumber = parsePrNumber(handoff);
+  const handoffBranch = parseBranchRef(handoff);
+  const handoffReviewedSha = parseReviewedHeadSha(handoff);
+  const handoffUpdateCommit = parseHandoffUpdateCommit(handoff);
+  const handoffFiles = listSectionItems(handoff, 'Files changed');
+  const handoffTests = listSectionItems(handoff, 'Tests / verification');
+  const prFiles = (pr.files || []).map((file) => file.path || '').filter(Boolean);
+  const prTests = listSectionItems(pr.body || '', 'Tests / verification');
+
+  if (hasPendingPrLanguage(handoff)) {
+    flags.push('latest handoff still says PR is pending create');
+  }
+
+  if (handoffPrNumber !== null && handoffPrNumber !== pr.number) {
+    flags.push('latest handoff PR number does not match the live PR');
+  }
+
+  if (handoffBranch && normalizeInline(handoffBranch) !== normalizeInline(pr.headRefName)) {
+    flags.push('latest handoff branch/ref does not match the live PR head branch');
+  }
+
+  if (handoffReviewedSha && handoffReviewedSha.toLowerCase() !== String(pr.headRefOid || '').toLowerCase()) {
+    const updateMatchesHead = handoffUpdateCommit &&
+      handoffUpdateCommit.toLowerCase() === String(pr.headRefOid || '').toLowerCase();
+    const handoffOnlyRefresh = localOnlyHandoffRefresh(handoffReviewedSha, String(pr.headRefOid || ''));
+
+    if (!(updateMatchesHead && handoffOnlyRefresh)) {
+      flags.push('latest handoff head SHA lags behind the live PR head');
+    }
+  }
+
+  if (prFiles.length) {
+    compareListSection(flags, 'files changed', prFiles, handoffFiles);
+  }
+
+  if (prTests.length || handoffTests.length) {
+    compareListSection(flags, 'tests / verification', prTests, handoffTests);
+  }
+
+  staleCloseoutFlags(pr, handoff, flags);
+
+  const approval = normalizeInline(section(handoff, 'Approval required?'));
+  if (pr.baseRefName === 'main' && pr.state === 'OPEN' && !approval.includes('kevin approval')) {
+    flags.push('latest handoff approval field does not reflect Kevin approval for merge to main');
+  }
+
+  return flags;
+}
+
 function filePaths(pr) {
   return (pr.files || []).map((file) => file.path || '');
 }
@@ -111,6 +305,7 @@ export function riskFlags(pr) {
   const flags = [];
   const body = pr.body || '';
   const paths = filePaths(pr);
+  const handoff = readLocalHandoff();
   const requiredSections = [
     'Summary',
     'Files changed',
@@ -190,6 +385,8 @@ export function riskFlags(pr) {
   if (pr.baseRefName === 'main' && pr.state === 'OPEN' && !pr.mergedAt) {
     flags.push('merge to main remains a protected action and needs Kevin approval');
   }
+
+  flags.push(...handoffDriftFlags(pr, handoff));
 
   return flags.length ? flags : ['none obvious from read-only triage'];
 }

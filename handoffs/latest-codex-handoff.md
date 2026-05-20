@@ -16,65 +16,67 @@ This file is not permanent history.
 
 ## Mission / PR / Issue
 
-Agent-007 Level 4 local PR triage script
+Agent-007 Fast Review Loop v1
 
 ## Related GitHub Artifacts
 
 - Repo: `TheYfactora12/agent-007`
-- PR: `#15`
+- PR: `#16`
 - Issue: `none`
-- Branch/ref: `agent-007-level-4-pr-triage`
-- Head SHA: `c91b64a3b19e2bd3a9212d7f263af49c5006e78a`
+- Branch/ref: `agent-007-fast-review-loop-v1`
+- Reviewed PR head: `2a4db433c048e2974cde092b03b6e0acefa1dce7`
+- Handoff update commit: `2c9ebfb8f531ef6a58a2357f22898a54ad0a40b5`
 
 ## Bottom line
 
-This adds Level 4 in the safest local-only form: a read-only PR triage script
-that generates a structured review packet from GitHub PR data without making
-governance decisions or writing to GitHub.
+This improves Level 4 by adding deterministic stale-state and closeout checks
+to the local read-only PR triage script so repeated PR review drift is caught
+before ChatGPT has to reconcile GitHub state manually.
 
 ## Why it matters
 
-Kevin still spends time scanning PR state, changed files, and evidence fields
-before asking ChatGPT for review. This script removes that repetitive
-collection work without automating judgment or authority.
+Recent reviews repeatedly lost time to the same avoidable drift: pending-vs-open
+state mistakes, stale head SHAs, PR-body/handoff mismatch, and stale post-merge
+closeout language. This change makes those problems deterministic triage flags
+instead of repeated human reconciliation work.
 
 ## What changed
 
-- Added `scripts/agent-007-pr-triage.mjs` as a local read-only PR triage tool.
-- Added `docs/agent-007-local-pr-triage.md` with usage and limits.
-- Updated `docs/agent-007-safe-pr-automation.md`,
-  `docs/agent-007-automation-roadmap.md`, and `START_HERE.md` to reference the
-  Level 4 local triage path.
-- Kept Levels 5 and 6 unimplemented.
+- Tightened `scripts/agent-007-pr-triage.mjs` to detect local handoff drift
+  against live PR state.
+- Added stale-state checks for pending/open/merged drift, stale head SHA, and
+  PR body vs handoff evidence mismatch.
+- Added post-merge closeout checks so stale next-action and Kevin-decision
+  fields are flagged after merge.
+- Added narrow local tests covering the new drift cases.
+- Updated `docs/agent-007-local-pr-triage.md` to describe the new stale-state
+  and closeout behavior.
 
 ## Files changed
 
 - `scripts/agent-007-pr-triage.mjs`
 - `tests/agent-007-pr-triage-tests.mjs`
 - `docs/agent-007-local-pr-triage.md`
-- `docs/agent-007-safe-pr-automation.md`
-- `docs/agent-007-automation-roadmap.md`
-- `START_HERE.md`
 - `handoffs/latest-codex-handoff.md`
 
 ## Tests / verification
 
 Verification used:
 
-- `node scripts/agent-007-pr-triage.mjs --repo TheYfactora12/agent-007 --pr 12`
 - `node scripts/check-agent-007-handoff.mjs`
 - `git diff --check`
 - `node tests/agent-007-pr-triage-tests.mjs`
-- confirmed the triage script only reads GitHub PR data and emits stdout
-- result: `agent-007 PR triage tests passed`
+- `node scripts/agent-007-pr-triage.mjs --repo TheYfactora12/agent-007 --pr 16`
+- Result: `Agent-007 handoff checks passed`
+- Result: `agent-007 PR triage tests passed`
 
 ## Risks / limitations
 
 - The script depends on `gh` authentication and network availability.
-- It summarizes evidence fields but does not validate whether the PR body is
-  truthful.
-- Older PRs that predate the current template will show missing sections, which
-  is useful but can be noisy.
+- It can flag drift, but it still does not decide whether that drift matters
+  enough to merge or block work.
+- Older PRs that predate the current template will continue to show missing
+  fields, which is useful but can be noisy.
 
 ## Governance status
 
@@ -86,20 +88,19 @@ Kevin approval
 
 ## What ChatGPT should review
 
-- whether the triage script stays strictly read-only
-- whether the output packet reduces review scanning work without acting like a
-  second handoff
-- whether the docs keep Levels 5 and 6 clearly unimplemented
+- whether the stale-state checks catch the repeated review friction correctly
+- whether the closeout flags stay deterministic and read-only
+- whether the packet is still useful instead of becoming a second handoff
 
 ## What Kevin must decide
 
-Whether this local Level 4 triage script is useful enough to keep as part of
-the standard PR review loop and whether to merge PR `#15` to `main`.
+Whether Fast Review Loop v1 is useful enough to keep as part of the standard
+Agent-007 review loop.
 
 ## Next recommended action
 
-Review the Level 4 local triage script PR, confirm the output is useful on a
-real PR, and keep all higher-level write automation deferred.
+Review PR `#16`, verify the new drift flags are useful on real PR state, and
+keep Levels 5 and 6 unimplemented.
 
 ## Hard limits confirmed
 

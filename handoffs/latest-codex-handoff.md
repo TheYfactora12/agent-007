@@ -24,7 +24,8 @@ Agent-007 Level 5 human-triggered review bot
 - PR: `#17`
 - Issue: `none`
 - Branch/ref: `agent-007-level-5-review-bot`
-- Head SHA: `bc28c76d7a555df5b3ed6bf5f0e8d22ca103fe89`
+- Reviewed implementation head: `bc28c76d7a555df5b3ed6bf5f0e8d22ca103fe89`
+- Live PR head at review time: `6a773a968593fa5f6f2966655a685da7a4ca7f20`
 
 ## Bottom line
 
@@ -88,6 +89,8 @@ Proceed
 ## Approval required?
 
 Kevin approval
+
+Merge to `main` still requires Kevin approval.
 
 ## What ChatGPT should review
 

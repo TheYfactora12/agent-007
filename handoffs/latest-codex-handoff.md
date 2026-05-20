@@ -16,50 +16,65 @@ This file is not permanent history.
 
 ## Mission / PR / Issue
 
-Agent-007 Level 2 safe PR automation smoke test
+Agent-007 Level 4 local PR triage script
 
 ## Related GitHub Artifacts
 
 - Repo: `TheYfactora12/agent-007`
-- PR: `#13` merged at `7fe3ab083917202c2fd855607cea562ea2faf96a`
+- PR: `#15`
 - Issue: `none`
-- Branch/ref: `main` synced to `origin/main`
+- Branch/ref: `agent-007-level-4-pr-triage`
+- Head SHA: `c91b64a3b19e2bd3a9212d7f263af49c5006e78a`
 
 ## Bottom line
 
-This is a tiny docs-only PR to confirm the read-only Agent-007 handoff check
-runs on pull requests.
+This adds Level 4 in the safest local-only form: a read-only PR triage script
+that generates a structured review packet from GitHub PR data without making
+governance decisions or writing to GitHub.
 
 ## Why it matters
 
-This validates the new Level 2 automation on a harmless branch before it is
-trusted as part of the normal review loop.
+Kevin still spends time scanning PR state, changed files, and evidence fields
+before asking ChatGPT for review. This script removes that repetitive
+collection work without automating judgment or authority.
 
 ## What changed
 
-- Added one harmless line to the safe PR automation doc.
-- Updated the live handoff so the PR has current relay structure.
-- Kept the scope to docs only with no workflow logic changes.
+- Added `scripts/agent-007-pr-triage.mjs` as a local read-only PR triage tool.
+- Added `docs/agent-007-local-pr-triage.md` with usage and limits.
+- Updated `docs/agent-007-safe-pr-automation.md`,
+  `docs/agent-007-automation-roadmap.md`, and `START_HERE.md` to reference the
+  Level 4 local triage path.
+- Kept Levels 5 and 6 unimplemented.
 
 ## Files changed
 
+- `scripts/agent-007-pr-triage.mjs`
+- `tests/agent-007-pr-triage-tests.mjs`
+- `docs/agent-007-local-pr-triage.md`
 - `docs/agent-007-safe-pr-automation.md`
+- `docs/agent-007-automation-roadmap.md`
+- `START_HERE.md`
 - `handoffs/latest-codex-handoff.md`
 
 ## Tests / verification
 
 Verification used:
 
-- `git status`
+- `node scripts/agent-007-pr-triage.mjs --repo TheYfactora12/agent-007 --pr 12`
 - `node scripts/check-agent-007-handoff.mjs`
 - `git diff --check`
+- `node tests/agent-007-pr-triage-tests.mjs`
+- confirmed the triage script only reads GitHub PR data and emits stdout
+- result: `agent-007 PR triage tests passed`
 
 ## Risks / limitations
 
-- This only proves the check runs on a fresh PR. It does not prove the check is
-  sufficient for all future PR patterns.
-- No write automation, approval automation, or external integrations are
-  exercised here.
+- The script depends on `gh` authentication and network availability.
+- It summarizes evidence fields but does not validate whether the PR body is
+  truthful.
+- Older PRs that predate the current template will show missing sections, which
+  is useful but can be noisy.
 
 ## Governance status
 
@@ -67,20 +82,24 @@ Proceed
 
 ## Approval required?
 
-No
+Kevin approval
 
 ## What ChatGPT should review
 
-- whether the docs-only test PR stayed safely minimal
-- whether the Level 2 check remains read-only and governance-preserving
+- whether the triage script stays strictly read-only
+- whether the output packet reduces review scanning work without acting like a
+  second handoff
+- whether the docs keep Levels 5 and 6 clearly unimplemented
 
 ## What Kevin must decide
 
-No decision pending.
+Whether this local Level 4 triage script is useful enough to keep as part of
+the standard PR review loop and whether to merge PR `#15` to `main`.
 
 ## Next recommended action
 
-Use the Agent-007 Level 2 read-only handoff check on the next real PR.
+Review the Level 4 local triage script PR, confirm the output is useful on a
+real PR, and keep all higher-level write automation deferred.
 
 ## Hard limits confirmed
 

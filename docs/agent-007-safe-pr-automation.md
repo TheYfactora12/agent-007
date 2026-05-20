@@ -63,7 +63,8 @@ The check validates structure only.
 - no secrets
 
 The only Level 5 write is one human-triggered PR comment containing a review
-packet. It is not approval.
+packet, posted through the GitHub REST issue-comment path from the trusted
+default-branch workflow. It is not approval.
 
 ## Next safe upgrade
 

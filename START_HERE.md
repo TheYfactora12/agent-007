@@ -119,10 +119,17 @@ See:
 - `.github/pull_request_template.md`
 - `docs/agent-007-safe-pr-automation.md`
 - `docs/agent-007-automation-roadmap.md`
+- `docs/agent-007-local-pr-triage.md`
 
 Passing the check means structure is present.
 
 It does not replace ChatGPT review or Kevin approval.
+
+For local PR packet generation, run:
+
+```bash
+node scripts/agent-007-pr-triage.mjs --repo owner/repo --pr 123
+```
 
 ## Direct Use Setup
 

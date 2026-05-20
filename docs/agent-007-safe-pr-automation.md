@@ -6,6 +6,7 @@ Agent-007 now has the safest useful PR automation at Levels 2 and 3:
 
 - a read-only GitHub Actions check that runs the existing handoff checker
 - a PR template that forces minimum evidence and governance fields
+- a local Level 4 triage script that assembles a read-only PR review packet
 
 This is validation automation only.
 
@@ -16,6 +17,7 @@ This test PR validates that the read-only handoff check runs on pull requests.
 See also:
 
 - `docs/agent-007-automation-roadmap.md`
+- `docs/agent-007-local-pr-triage.md`
 
 ## What the check means
 
@@ -63,6 +65,6 @@ The check validates structure only.
 
 Only after this proves useful:
 
-- keep the same read-only check in GitHub Actions
+- use the local triage script to reduce manual scanning work
 - do not add write-side automation unless Kevin explicitly approves it
 - move up the roadmap one level at a time, not all at once

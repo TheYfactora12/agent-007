@@ -86,24 +86,35 @@ Exit criteria before moving higher:
 
 ## Level 4 — Local PR triage script
 
-Status: plan only
+Status: implemented in local form
 
-What it would do:
+What it is:
 
-- read local PR-related context
-- summarize changed files, verification, and governance fields
-- assemble a review packet for Kevin and ChatGPT
+- a local script: `node scripts/agent-007-pr-triage.mjs --repo owner/repo --pr 123`
+- reads GitHub PR metadata through `gh pr view`
+- summarizes changed files, checks, and governance fields
+- assembles a read-only review packet for Kevin and ChatGPT
 
 Constraints:
 
 - should stay local-first
 - should avoid new dependencies if possible
-- should not require tokens beyond what existing CLI use already needs
+- should not require tokens beyond what existing `gh` CLI use already needs
+- should not write to GitHub
 
-Do not implement until:
+What it does not do:
 
-- Level 2 and 3 are proven useful
-- there is a repeated manual triage burden worth removing
+- no decision output
+- no comments
+- no labels
+- no merge actions
+- no file edits
+
+Exit criteria before moving higher:
+
+- the packet makes PR review faster in real use
+- Kevin finds it easier to spot missing evidence or stale PR state
+- it does not create a second handoff burden
 
 ## Level 5 — Human-triggered review comment bot
 

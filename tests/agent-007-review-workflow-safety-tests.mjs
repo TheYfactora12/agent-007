@@ -28,14 +28,16 @@ mustInclude('contents: read');
 mustInclude('pull-requests: read');
 mustInclude('issues: write');
 mustInclude('ref: ${{ github.event.repository.default_branch }}');
-mustInclude('gh pr comment');
-mustInclude('--body-file review-packet.md');
+mustInclude('uses: actions/github-script@v7');
+mustInclude("const body = fs.readFileSync('review-packet.md', 'utf8');");
+mustInclude('github.rest.issues.createComment');
 
 mustNotInclude(/pull_request_target:/, 'pull_request_target');
 mustNotInclude(/contents:\s*write/i, 'contents: write');
 mustNotInclude(/pull-requests:\s*write/i, 'pull-requests: write');
 mustNotInclude(/id-token:\s*write/i, 'id-token: write');
 mustNotInclude(/gh pr merge/i, 'gh pr merge');
+mustNotInclude(/gh pr comment/i, 'gh pr comment');
 mustNotInclude(/auto-merge/i, 'auto-merge');
 mustNotInclude(/gh issue close/i, 'gh issue close');
 mustNotInclude(/gh label/i, 'gh label');

@@ -37,6 +37,8 @@ The script reads PR data through `gh pr view` and outputs:
 - PR body evidence fields
 - hard limits field
 - a small list of triage flags
+- stale-state drift between the live PR and `handoffs/latest-codex-handoff.md`
+- post-merge closeout drift when the handoff still reads like the PR is pending
 
 ## What it does not do
 
@@ -58,6 +60,7 @@ The script does not:
 - no new dependencies
 - no GitHub write actions
 - no approval-gate changes
+- no hidden closeout writes or sync steps
 
 ## Kevin workflow
 

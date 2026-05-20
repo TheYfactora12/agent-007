@@ -65,6 +65,9 @@ The check validates structure only.
 The only Level 5 write is one human-triggered PR comment containing a review
 packet. It is not approval.
 
+This validation PR exists only to confirm the Level 5 review command posts one
+review packet comment when explicitly triggered.
+
 ## Next safe upgrade
 
 Only after this proves useful:

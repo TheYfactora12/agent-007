@@ -16,51 +16,50 @@ This file is not permanent history.
 
 ## Mission / PR / Issue
 
-Agent-007 post-merge direct-use setup verification
+Agent-007 Level 2 safe PR automation smoke test
 
 ## Related GitHub Artifacts
 
 - Repo: `TheYfactora12/agent-007`
-- PR: `#9` merged
-- Issue: `#10`
-- Branch/ref: `main` after merge commit `dd87a6e1d55a66860e78d29b6582ba7e079ef71d`
+- PR: `pending create`
+- Issue: `none`
+- Branch/ref: `test-agent-007-level-2-check`
 
 ## Bottom line
 
-The direct-use setup pack is merged and safe for Kevin to use manually in
-ChatGPT Projects, a private Custom GPT, and Perplexity.
+This is a tiny docs-only PR to confirm the read-only Agent-007 handoff check
+runs on pull requests.
 
 ## Why it matters
 
-This reduces manual setup friction without adding runtime automation, Actions,
-external integrations, API keys, or approval bypasses.
+This validates the new Level 2 automation on a harmless branch before it is
+trusted as part of the normal review loop.
 
 ## What changed
 
-- Verified the merged setup-pack files are present on `main`.
-- Added one post-merge setup verification note.
-- Kept the scope limited to manual setup guidance only.
+- Added one harmless line to the safe PR automation doc.
+- Updated the live handoff so the PR has current relay structure.
+- Kept the scope to docs only with no workflow logic changes.
 
 ## Files changed
 
+- `docs/agent-007-safe-pr-automation.md`
 - `handoffs/latest-codex-handoff.md`
-- `integrations/shared/agent-007-direct-use-post-merge-verification.md`
 
 ## Tests / verification
 
 Verification used:
 
 - `git status`
-- `git log --oneline -5`
-- `find integrations -maxdepth 3 -type f -print | sort`
 - `node scripts/check-agent-007-handoff.mjs`
+- `git diff --check`
 
 ## Risks / limitations
 
-- This does not create or configure ChatGPT Projects, Custom GPTs, Perplexity,
-  Actions, or API keys automatically.
-- Kevin must still do setup manually in the ChatGPT and Perplexity UIs.
-- No new mission is justified by this verification alone.
+- This only proves the check runs on a fresh PR. It does not prove the check is
+  sufficient for all future PR patterns.
+- No write automation, approval automation, or external integrations are
+  exercised here.
 
 ## Governance status
 
@@ -72,19 +71,17 @@ No
 
 ## What ChatGPT should review
 
-- whether the merged setup pack is clean and ready for manual use
-- whether the verification note is clear enough for Kevin to follow directly
-- whether direct use remains safely manual and governance-preserving
+- whether the docs-only test PR stayed safely minimal
+- whether the Level 2 check remains read-only and governance-preserving
 
 ## What Kevin must decide
 
-Whether to start using the merged setup pack directly in ChatGPT and Perplexity
-without further Agent-007 expansion.
+Whether the Level 2 automation is safe enough to keep using on real PRs.
 
 ## Next recommended action
 
-Use the merged setup pack directly. Do not start Mission 006 unless Kevin
-explicitly approves a new bounded mission.
+Open the PR, confirm the check runs, and leave it unmerged until Kevin decides
+whether the Level 2 automation passed its smoke test.
 
 ## Hard limits confirmed
 

@@ -11,6 +11,8 @@ This is validation automation only.
 
 It is not AI automation.
 
+This test PR validates that the read-only handoff check runs on pull requests.
+
 See also:
 
 - `docs/agent-007-automation-roadmap.md`

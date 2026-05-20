@@ -109,6 +109,20 @@ The check runner validates relay handoff structure only.
 
 It does not approve work.
 
+## Safe PR Automation
+
+Agent-007 PRs can use a read-only GitHub check plus a PR template.
+
+See:
+
+- `.github/workflows/agent-007-handoff-check.yml`
+- `.github/pull_request_template.md`
+- `docs/agent-007-safe-pr-automation.md`
+
+Passing the check means structure is present.
+
+It does not replace ChatGPT review or Kevin approval.
+
 ## Direct Use Setup
 
 For direct use in ChatGPT or Perplexity, see:

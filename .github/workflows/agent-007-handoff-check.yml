@@ -1,0 +1,26 @@
+name: Agent-007 Handoff Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  handoff-check:
+    name: Validate Agent-007 handoff structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run handoff checker
+        run: node scripts/check-agent-007-handoff.mjs

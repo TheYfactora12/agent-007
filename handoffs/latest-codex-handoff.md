@@ -21,9 +21,10 @@ Agent-007 Fast Review Loop v1
 ## Related GitHub Artifacts
 
 - Repo: `TheYfactora12/agent-007`
-- PR: `none yet`
+- PR: `#16`
 - Issue: `none`
 - Branch/ref: `agent-007-fast-review-loop-v1`
+- Head SHA: `2a4db433c048e2974cde092b03b6e0acefa1dce7`
 
 ## Bottom line
 
@@ -64,7 +65,9 @@ Verification used:
 - `node scripts/check-agent-007-handoff.mjs`
 - `git diff --check`
 - `node tests/agent-007-pr-triage-tests.mjs`
-- result: `agent-007 PR triage tests passed`
+- `node scripts/agent-007-pr-triage.mjs --repo TheYfactora12/agent-007 --pr 16`
+- Result: `Agent-007 handoff checks passed`
+- Result: `agent-007 PR triage tests passed`
 
 ## Risks / limitations
 
@@ -95,7 +98,7 @@ Agent-007 review loop.
 
 ## Next recommended action
 
-Open a bounded PR for Fast Review Loop v1, verify the new drift tests pass, and
+Review PR `#16`, verify the new drift flags are useful on real PR state, and
 keep Levels 5 and 6 unimplemented.
 
 ## Hard limits confirmed

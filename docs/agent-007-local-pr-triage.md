@@ -39,6 +39,8 @@ The script reads PR data through `gh pr view` and outputs:
 - a small list of triage flags
 - stale-state drift between the live PR and `handoffs/latest-codex-handoff.md`
 - post-merge closeout drift when the handoff still reads like the PR is pending
+- a safe exception for the handoff self-reference loop when only
+  `handoffs/latest-codex-handoff.md` changed after the reviewed PR snapshot
 
 ## What it does not do
 

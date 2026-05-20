@@ -135,6 +135,20 @@ function parseHeadSha(text) {
   return match ? match[0] : '';
 }
 
+function parseReviewedHeadSha(text) {
+  const reviewed = parseArtifactValue(text, 'Reviewed PR head');
+  const fallback = parseHeadSha(text);
+  const raw = reviewed || fallback;
+  const match = raw.match(/\b[0-9a-f]{7,40}\b/i);
+  return match ? match[0] : '';
+}
+
+function parseHandoffUpdateCommit(text) {
+  const raw = parseArtifactValue(text, 'Handoff update commit');
+  const match = raw.match(/\b[0-9a-f]{7,40}\b/i);
+  return match ? match[0] : '';
+}
+
 function parseBranchRef(text) {
   return parseArtifactValue(text, 'Branch/ref');
 }
@@ -156,6 +170,26 @@ function normalizeListItem(value) {
 function setDifference(left, right) {
   const rightSet = new Set(right);
   return left.filter((item) => !rightSet.has(item));
+}
+
+function localOnlyHandoffRefresh(reviewedSha, liveSha) {
+  if (!reviewedSha || !liveSha || reviewedSha.toLowerCase() === liveSha.toLowerCase()) {
+    return false;
+  }
+
+  try {
+    const raw = execFileSync('git', ['diff', '--name-only', `${reviewedSha}..${liveSha}`], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe']
+    });
+    const files = raw
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+    return files.length === 1 && files[0] === 'handoffs/latest-codex-handoff.md';
+  } catch {
+    return false;
+  }
 }
 
 function compareListSection(flags, label, expectedItems, actualItems) {
@@ -204,7 +238,8 @@ function handoffDriftFlags(pr, handoff) {
 
   const handoffPrNumber = parsePrNumber(handoff);
   const handoffBranch = parseBranchRef(handoff);
-  const handoffSha = parseHeadSha(handoff);
+  const handoffReviewedSha = parseReviewedHeadSha(handoff);
+  const handoffUpdateCommit = parseHandoffUpdateCommit(handoff);
   const handoffFiles = listSectionItems(handoff, 'Files changed');
   const handoffTests = listSectionItems(handoff, 'Tests / verification');
   const prFiles = (pr.files || []).map((file) => file.path || '').filter(Boolean);
@@ -222,8 +257,14 @@ function handoffDriftFlags(pr, handoff) {
     flags.push('latest handoff branch/ref does not match the live PR head branch');
   }
 
-  if (handoffSha && handoffSha.toLowerCase() !== String(pr.headRefOid || '').toLowerCase()) {
-    flags.push('latest handoff head SHA lags behind the live PR head');
+  if (handoffReviewedSha && handoffReviewedSha.toLowerCase() !== String(pr.headRefOid || '').toLowerCase()) {
+    const updateMatchesHead = handoffUpdateCommit &&
+      handoffUpdateCommit.toLowerCase() === String(pr.headRefOid || '').toLowerCase();
+    const handoffOnlyRefresh = localOnlyHandoffRefresh(handoffReviewedSha, String(pr.headRefOid || ''));
+
+    if (!(updateMatchesHead && handoffOnlyRefresh)) {
+      flags.push('latest handoff head SHA lags behind the live PR head');
+    }
   }
 
   if (prFiles.length) {

@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 import { buildPacket, riskFlags } from '../scripts/agent-007-pr-triage.mjs';
 
@@ -312,6 +313,53 @@ Open the PR, confirm the check runs, and leave it unmerged.
   });
 }
 
+function testReviewedHeadCanLagWhenOnlyHandoffRefreshChanged() {
+  const reviewedCommit = execFileSync('git', ['rev-parse', 'HEAD~1'], {
+    encoding: 'utf8'
+  }).trim();
+  const liveCommit = execFileSync('git', ['rev-parse', 'HEAD'], {
+    encoding: 'utf8'
+  }).trim();
+
+  withHandoff(`# Latest Codex Handoff
+
+## Related GitHub Artifacts
+
+- Repo: \`TheYfactora12/agent-007\`
+- PR: \`#99\`
+- Issue: \`none\`
+- Branch/ref: \`test-branch\`
+- Reviewed PR head: \`${reviewedCommit}\`
+- Handoff update commit: \`${liveCommit}\`
+
+## Files changed
+
+- \`some/file.md\`
+
+## Tests / verification
+
+- \`node test.js\`
+
+## Approval required?
+
+Kevin approval
+
+## What Kevin must decide
+
+No decision pending.
+
+## Next recommended action
+
+Review.
+`, () => {
+    const flags = riskFlags(makePr({
+      headRefOid: liveCommit
+    }));
+
+    assert(!flags.includes('latest handoff head SHA lags behind the live PR head'));
+  });
+}
+
 try {
   testRiskFlags();
   testBundleFlagClearsWhenBundleFilesPresent();
@@ -320,6 +368,7 @@ try {
   testPendingCreateDriftFlag();
   testFileAndTestDriftFlags();
   testMergedCloseoutFlags();
+  testReviewedHeadCanLagWhenOnlyHandoffRefreshChanged();
 } finally {
   fs.writeFileSync(handoffPath, originalHandoff, 'utf8');
 }

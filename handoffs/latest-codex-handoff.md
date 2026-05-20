@@ -24,7 +24,8 @@ Agent-007 Fast Review Loop v1
 - PR: `#16`
 - Issue: `none`
 - Branch/ref: `agent-007-fast-review-loop-v1`
-- Head SHA: `2a4db433c048e2974cde092b03b6e0acefa1dce7`
+- Reviewed PR head: `2a4db433c048e2974cde092b03b6e0acefa1dce7`
+- Handoff update commit: `2c9ebfb8f531ef6a58a2357f22898a54ad0a40b5`
 
 ## Bottom line
 

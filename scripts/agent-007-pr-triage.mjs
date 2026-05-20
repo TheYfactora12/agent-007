@@ -3,12 +3,35 @@
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 function usage() {
   console.error('Usage: node scripts/agent-007-pr-triage.mjs --repo owner/repo --pr 123');
   process.exit(1);
 }
+
+export const prViewFields = [
+  'number',
+  'title',
+  'url',
+  'state',
+  'isDraft',
+  'mergeable',
+  'mergeStateStatus',
+  'reviewDecision',
+  'author',
+  'baseRefName',
+  'headRefName',
+  'headRefOid',
+  'body',
+  'files',
+  'statusCheckRollup',
+  'changedFiles',
+  'additions',
+  'deletions',
+  'mergedAt',
+  'mergeCommit',
+  'closingIssuesReferences'
+].join(',');
 
 export function parseArgs(argv) {
   const args = { repo: '', pr: '' };
@@ -34,6 +57,10 @@ function ghJson(args) {
     stdio: ['ignore', 'pipe', 'pipe']
   });
   return JSON.parse(raw);
+}
+
+export function fetchPrData(repo, prNumber) {
+  return ghJson(['pr', 'view', String(prNumber), '--repo', repo, '--json', prViewFields]);
 }
 
 export function normalizeText(value) {
@@ -487,33 +514,9 @@ export function buildPacket(repo, prData) {
 
 export function main(argv = process.argv.slice(2)) {
   const { repo, pr } = parseArgs(argv);
-  const fields = [
-    'number',
-    'title',
-    'url',
-    'state',
-    'isDraft',
-    'mergeable',
-    'mergeStateStatus',
-    'reviewDecision',
-    'author',
-    'baseRefName',
-    'headRefName',
-    'headRefOid',
-    'body',
-    'files',
-    'statusCheckRollup',
-    'changedFiles',
-    'additions',
-    'deletions',
-    'mergedAt',
-    'mergeCommit',
-    'closingIssuesReferences'
-  ].join(',');
-
   let prData;
   try {
-    prData = ghJson(['pr', 'view', pr, '--repo', repo, '--json', fields]);
+    prData = fetchPrData(repo, pr);
   } catch (error) {
     const detail = error.stderr ? error.stderr.toString().trim() : error.message;
     console.error(`Failed to read PR data with gh: ${detail}`);
@@ -523,8 +526,6 @@ export function main(argv = process.argv.slice(2)) {
   process.stdout.write(`${buildPacket(repo, prData)}\n`);
 }
 
-const entryFile = process.argv[1] ? path.resolve(process.argv[1]) : '';
-const thisFile = fileURLToPath(import.meta.url);
-if (entryFile === thisFile) {
+if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname)) {
   main();
 }

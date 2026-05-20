@@ -16,47 +16,50 @@ This file is not permanent history.
 
 ## Mission / PR / Issue
 
-Agent-007 Fast Review Loop v1
+Agent-007 Level 5 human-triggered review bot
 
 ## Related GitHub Artifacts
 
 - Repo: `TheYfactora12/agent-007`
-- PR: `#16`
+- PR: `#17`
 - Issue: `none`
-- Branch/ref: `agent-007-fast-review-loop-v1`
-- Reviewed PR head: `2a4db433c048e2974cde092b03b6e0acefa1dce7`
-- Handoff update commit: `2c9ebfb8f531ef6a58a2357f22898a54ad0a40b5`
+- Branch/ref: `agent-007-level-5-review-bot`
+- Reviewed implementation head: `bc28c76d7a555df5b3ed6bf5f0e8d22ca103fe89`
+- Live PR head at review time: `6a773a968593fa5f6f2966655a685da7a4ca7f20`
 
 ## Bottom line
 
-This improves Level 4 by adding deterministic stale-state and closeout checks
-to the local read-only PR triage script so repeated PR review drift is caught
-before ChatGPT has to reconcile GitHub state manually.
+This builds Level 5 as a human-triggered review packet bot that listens for
+the exact `/agent007 review` command and posts one triage packet comment using
+trusted default-branch logic.
 
 ## Why it matters
 
-Recent reviews repeatedly lost time to the same avoidable drift: pending-vs-open
-state mistakes, stale head SHAs, PR-body/handoff mismatch, and stale post-merge
-closeout language. This change makes those problems deterministic triage flags
-instead of repeated human reconciliation work.
+Kevin should not have to manually copy a local triage packet into GitHub every
+time he wants one on a PR. This keeps the review packet in the PR thread while
+preserving Kevin approval gates and avoiding any Level 6 authority.
 
 ## What changed
 
-- Tightened `scripts/agent-007-pr-triage.mjs` to detect local handoff drift
-  against live PR state.
-- Added stale-state checks for pending/open/merged drift, stale head SHA, and
-  PR body vs handoff evidence mismatch.
-- Added post-merge closeout checks so stale next-action and Kevin-decision
-  fields are flagged after merge.
-- Added narrow local tests covering the new drift cases.
-- Updated `docs/agent-007-local-pr-triage.md` to describe the new stale-state
-  and closeout behavior.
+- Added `scripts/agent-007-review-command.mjs` to validate the exact trigger
+  and build a comment-ready review packet from the existing triage logic.
+- Added `.github/workflows/agent-007-review-command.yml` to listen for
+  `issue_comment` events and post one PR comment only when the trigger is exact.
+- Added local tests for the review-command parser and formatter.
+- Updated Level 4/5 docs to explain the trusted default-branch architecture and
+  the Level 5 trust boundary.
 
 ## Files changed
 
 - `scripts/agent-007-pr-triage.mjs`
+- `scripts/agent-007-review-command.mjs`
 - `tests/agent-007-pr-triage-tests.mjs`
+- `tests/agent-007-review-command-tests.mjs`
+- `.github/workflows/agent-007-review-command.yml`
 - `docs/agent-007-local-pr-triage.md`
+- `docs/agent-007-automation-roadmap.md`
+- `docs/agent-007-safe-pr-automation.md`
+- `START_HERE.md`
 - `handoffs/latest-codex-handoff.md`
 
 ## Tests / verification
@@ -66,17 +69,18 @@ Verification used:
 - `node scripts/check-agent-007-handoff.mjs`
 - `git diff --check`
 - `node tests/agent-007-pr-triage-tests.mjs`
-- `node scripts/agent-007-pr-triage.mjs --repo TheYfactora12/agent-007 --pr 16`
+- `node tests/agent-007-review-command-tests.mjs`
 - Result: `Agent-007 handoff checks passed`
 - Result: `agent-007 PR triage tests passed`
+- Result: `agent-007 review command tests passed`
 
 ## Risks / limitations
 
 - The script depends on `gh` authentication and network availability.
-- It can flag drift, but it still does not decide whether that drift matters
-  enough to merge or block work.
-- Older PRs that predate the current template will continue to show missing
-  fields, which is useful but can be noisy.
+- Level 5 adds one GitHub write path: posting a PR comment on explicit human
+  trigger.
+- The packet still does not approve anything and can still be noisy if used too
+  casually.
 
 ## Governance status
 
@@ -86,21 +90,24 @@ Proceed
 
 Kevin approval
 
+Merge to `main` still requires Kevin approval.
+
 ## What ChatGPT should review
 
-- whether the stale-state checks catch the repeated review friction correctly
-- whether the closeout flags stay deterministic and read-only
-- whether the packet is still useful instead of becoming a second handoff
+- whether the trigger is exact and human-only
+- whether the workflow stays on trusted default-branch logic
+- whether the posted comment remains a review packet only, not approval
+- whether Levels 5 and 6 stay clearly separated
 
 ## What Kevin must decide
 
-Whether Fast Review Loop v1 is useful enough to keep as part of the standard
-Agent-007 review loop.
+Whether the Level 5 review command is safe enough and useful enough to keep as
+part of the standard Agent-007 PR review loop.
 
 ## Next recommended action
 
-Review PR `#16`, verify the new drift flags are useful on real PR state, and
-keep Levels 5 and 6 unimplemented.
+Review PR `#17`, verify the trigger and trust boundary, and keep Level 6
+unimplemented.
 
 ## Hard limits confirmed
 

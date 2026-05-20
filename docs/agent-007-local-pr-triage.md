@@ -69,6 +69,19 @@ The script does not:
 3. Ask ChatGPT to review the latest Codex handoff.
 4. Keep Kevin approval for protected actions.
 
+## Level 5 handoff
+
+Level 5 reuses the same local triage packet logic.
+
+If a human comments exactly:
+
+```text
+/agent007 review
+```
+
+a trusted default-branch workflow can generate this same packet and post one PR
+comment.
+
 ## Output quality rule
 
 The triage packet should reduce scanning work.

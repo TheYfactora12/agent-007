@@ -16,71 +16,73 @@ This file is not permanent history.
 
 ## Mission / PR / Issue
 
-Agent-007 Level 5 human-triggered review bot
+Agent-007 Level 5 comment-posting repair
 
 ## Related GitHub Artifacts
 
 - Repo: `TheYfactora12/agent-007`
-- PR: `#17`
+- PR: `#19`
 - Issue: `none`
-- Branch/ref: `agent-007-level-5-review-bot`
-- Reviewed implementation head: `bc28c76d7a555df5b3ed6bf5f0e8d22ca103fe89`
-- Live PR head at review time: `6a773a968593fa5f6f2966655a685da7a4ca7f20`
+- Branch/ref: `fix-level-5-comment-posting`
+- Reviewed PR head: `532447b0a98d5aedac92848b4a567872b7b73653`
 
 ## Bottom line
 
-This builds Level 5 as a human-triggered review packet bot that listens for
-the exact `/agent007 review` command and posts one triage packet comment using
-trusted default-branch logic.
+PR `#19` repairs the merged Level 5 `/agent007 review` workflow so it posts its
+single review packet comment through the GitHub REST issue-comment path instead
+of the blocked `gh pr comment` path.
 
 ## Why it matters
 
-Kevin should not have to manually copy a local triage packet into GitHub every
-time he wants one on a PR. This keeps the review packet in the PR thread while
-preserving Kevin approval gates and avoiding any Level 6 authority.
+The first live smoke test on harmless PR `#18` proved the Level 5 workflow
+triggered and built the review packet correctly, but the comment-post step
+failed with `GraphQL: Resource not accessible by integration (addComment)`.
+Without this repair, Level 5 remains merged but not usable.
 
 ## What changed
 
-- Added `scripts/agent-007-review-command.mjs` to validate the exact trigger
-  and build a comment-ready review packet from the existing triage logic.
-- Added `.github/workflows/agent-007-review-command.yml` to listen for
-  `issue_comment` events and post one PR comment only when the trigger is exact.
-- Added local tests for the review-command parser and formatter.
-- Updated Level 4/5 docs to explain the trusted default-branch architecture and
-  the Level 5 trust boundary.
+- Replaced the workflow comment-post step in
+  `.github/workflows/agent-007-review-command.yml` with
+  `actions/github-script@v7`.
+- Switched the comment post path to `github.rest.issues.createComment(...)`.
+- Kept the trusted default-branch checkout model unchanged.
+- Kept workflow permissions limited to:
+  - `contents: read`
+  - `pull-requests: read`
+  - `issues: write`
+- Updated the workflow safety test to require the REST comment path and forbid
+  the old `gh pr comment` path.
+- Updated the safe PR automation doc to reflect the REST issue-comment path.
 
 ## Files changed
 
-- `scripts/agent-007-pr-triage.mjs`
-- `scripts/agent-007-review-command.mjs`
-- `tests/agent-007-pr-triage-tests.mjs`
-- `tests/agent-007-review-command-tests.mjs`
 - `.github/workflows/agent-007-review-command.yml`
-- `docs/agent-007-local-pr-triage.md`
-- `docs/agent-007-automation-roadmap.md`
 - `docs/agent-007-safe-pr-automation.md`
-- `START_HERE.md`
 - `handoffs/latest-codex-handoff.md`
+- `tests/agent-007-review-workflow-safety-tests.mjs`
 
 ## Tests / verification
 
 Verification used:
 
 - `node scripts/check-agent-007-handoff.mjs`
-- `git diff --check`
 - `node tests/agent-007-pr-triage-tests.mjs`
 - `node tests/agent-007-review-command-tests.mjs`
+- `node tests/agent-007-review-workflow-safety-tests.mjs`
+- `git diff --check`
 - Result: `Agent-007 handoff checks passed`
 - Result: `agent-007 PR triage tests passed`
 - Result: `agent-007 review command tests passed`
+- Result: `agent-007 review workflow safety tests passed`
+- Result: `git diff --check` clean
 
 ## Risks / limitations
 
-- The script depends on `gh` authentication and network availability.
-- Level 5 adds one GitHub write path: posting a PR comment on explicit human
-  trigger.
-- The packet still does not approve anything and can still be noisy if used too
-  casually.
+- This repair fixes only the Level 5 comment-posting path.
+- It does not add approval logic, merge logic, labels, close actions, file
+  edits, deploy behavior, or Level 6 behavior.
+- The repair still needs a live GitHub smoke test after merge to confirm that
+  exactly one review packet comment is posted on trigger.
 
 ## Governance status
 
@@ -94,20 +96,19 @@ Merge to `main` still requires Kevin approval.
 
 ## What ChatGPT should review
 
-- whether the trigger is exact and human-only
-- whether the workflow stays on trusted default-branch logic
-- whether the posted comment remains a review packet only, not approval
-- whether Levels 5 and 6 stay clearly separated
+- whether the REST issue-comment path fixes the observed Level 5 failure
+- whether the workflow remains limited to one human-triggered review packet
+  comment
+- whether the permission model stays least-privilege and trusted-branch only
 
 ## What Kevin must decide
 
-Whether the Level 5 review command is safe enough and useful enough to keep as
-part of the standard Agent-007 PR review loop.
+Whether to approve merging PR `#19` to repair Level 5 comment posting.
 
 ## Next recommended action
 
-Review PR `#17`, verify the trigger and trust boundary, and keep Level 6
-unimplemented.
+Review PR `#19`. If merged, rerun the harmless `/agent007 review` smoke test on
+PR `#18` and confirm exactly one review packet comment is posted.
 
 ## Hard limits confirmed
 

@@ -118,23 +118,34 @@ Exit criteria before moving higher:
 
 ## Level 5 — Human-triggered review comment bot
 
-Status: plan only
+Status: implemented in bounded form
 
-What it would do:
+What it is:
 
 - respond to an explicit command such as `/agent007 review`
-- publish a bounded review summary only when intentionally triggered
+- publish one bounded review packet comment only when intentionally triggered
+- reuse the local Level 4 triage logic from the trusted default branch
 
 Why it is higher risk:
 
 - writes to GitHub
 - can create noise if prompts or routing are weak
 
-Do not implement until:
+What it does not do:
 
-- lower levels are stable
-- Kevin explicitly approves write-side review automation
-- the review format is already proven manually
+- no approval
+- no merge
+- no deploy
+- no labels
+- no issue closing
+- no file edits
+- no PR-branch code execution
+
+Exit criteria before moving higher:
+
+- Kevin finds the posted packet useful instead of noisy
+- the command is used intentionally, not casually
+- protected approvals remain clearly human-gated
 
 ## Level 6 — Controlled write automation
 

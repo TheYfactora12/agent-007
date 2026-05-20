@@ -7,6 +7,7 @@ Agent-007 now has the safest useful PR automation at Levels 2 and 3:
 - a read-only GitHub Actions check that runs the existing handoff checker
 - a PR template that forces minimum evidence and governance fields
 - a local Level 4 triage script that assembles a read-only PR review packet
+- a bounded Level 5 `/agent007 review` command that posts one review packet comment
 
 This is validation automation only.
 
@@ -54,12 +55,15 @@ The check validates structure only.
 ## Why this is safe
 
 - no LLM calls
-- no GitHub write actions
+- no merge-side GitHub write actions
 - no auto-comments
 - no auto-fixes
 - no auto-labeling
 - no auto-merge
 - no secrets
+
+The only Level 5 write is one human-triggered PR comment containing a review
+packet. It is not approval.
 
 ## Next safe upgrade
 

@@ -131,6 +131,12 @@ For local PR packet generation, run:
 node scripts/agent-007-pr-triage.mjs --repo owner/repo --pr 123
 ```
 
+For a human-triggered GitHub review packet comment, use:
+
+```text
+/agent007 review
+```
+
 ## Direct Use Setup
 
 For direct use in ChatGPT or Perplexity, see:

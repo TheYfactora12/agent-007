@@ -21,9 +21,10 @@ Agent-007 Level 5 human-triggered review bot
 ## Related GitHub Artifacts
 
 - Repo: `TheYfactora12/agent-007`
-- PR: `none yet`
+- PR: `#17`
 - Issue: `none`
 - Branch/ref: `agent-007-level-5-review-bot`
+- Head SHA: `bc28c76d7a555df5b3ed6bf5f0e8d22ca103fe89`
 
 ## Bottom line
 
@@ -102,8 +103,8 @@ part of the standard Agent-007 PR review loop.
 
 ## Next recommended action
 
-Open a bounded PR for Level 5, verify the trigger and comment tests, and keep
-Level 6 unimplemented.
+Review PR `#17`, verify the trigger and trust boundary, and keep Level 6
+unimplemented.
 
 ## Hard limits confirmed
 

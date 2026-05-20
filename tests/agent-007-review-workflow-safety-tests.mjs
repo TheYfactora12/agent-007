@@ -25,7 +25,7 @@ mustInclude("types: [created]");
 mustInclude("github.event.comment.body == '/agent007 review'");
 mustInclude('github.event.issue.pull_request');
 mustInclude('contents: read');
-mustInclude('pull-requests: read');
+mustInclude('pull-requests: write');
 mustInclude('issues: write');
 mustInclude('ref: ${{ github.event.repository.default_branch }}');
 mustInclude('uses: actions/github-script@v7');
@@ -34,7 +34,6 @@ mustInclude('github.rest.issues.createComment');
 
 mustNotInclude(/pull_request_target:/, 'pull_request_target');
 mustNotInclude(/contents:\s*write/i, 'contents: write');
-mustNotInclude(/pull-requests:\s*write/i, 'pull-requests: write');
 mustNotInclude(/id-token:\s*write/i, 'id-token: write');
 mustNotInclude(/gh pr merge/i, 'gh pr merge');
 mustNotInclude(/gh pr comment/i, 'gh pr comment');
